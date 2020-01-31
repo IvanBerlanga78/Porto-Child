@@ -17,44 +17,41 @@ function porto_child_css() {
 }
 
 add_action( 'wp_enqueue_scripts', 'checkout_scripts', 12 );
-function checkout_scripts() { 
+function checkout_scripts() {
     if (is_page( 'checkout' ) ) {
     wp_enqueue_script( 'jqueryScrollTo', esc_url( get_stylesheet_directory_uri() ) . '/js/jquery.scrollTo.min.js' );
     wp_enqueue_script( 'jqueryUI', esc_url( get_stylesheet_directory_uri() ) . '/js/jquery-ui.min.js' );
     wp_enqueue_script( 'jquervalidate', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/jquery.validate.min.js' );
      wp_enqueue_script( 'jquervalidate_aditional_methods', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/additional-methods.min.js' );
      wp_enqueue_script( 'jquervalidate_localization', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/localization/messages_es.min.js' );
-
-    
     };
-
 }
 
-add_action( 'wp_enqueue_scripts', 'general_script', 12 );      
-function general_script() { 
+add_action( 'wp_enqueue_scripts', 'general_script', 12 );
+function general_script() {
     wp_enqueue_script( 'general_script', esc_url( get_stylesheet_directory_uri() ) . '/js/script.js' );
 }
 
-add_action( 'wp_enqueue_scripts', 'awesomplete_script', 12 );     
-function awesomplete_script() { 
-  
+add_action( 'wp_enqueue_scripts', 'awesomplete_script', 12 );
+function awesomplete_script() {
+
     wp_enqueue_script( 'awesomplete', esc_url( get_stylesheet_directory_uri() ) . '/js/awesomplete-custom.js' );
     wp_enqueue_script( 'search_script', esc_url( get_stylesheet_directory_uri() ) . '/js/script-search.js' );
     wp_enqueue_style( 'awesomplete-css', esc_url( get_stylesheet_directory_uri() ) . '/css/awesomplete.css' );
-    
+
 }
 
 
 
 
 add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
- 
+
 function woo_remove_product_tabs( $tabs ) {
- 
+
     unset( $tabs['description'] );          // Remove the description tab
     unset( $tabs['reviews'] );          // Remove the reviews tab
     unset( $tabs['additional_information'] );   // Remove the additional information tab
- 
+
     return $tabs;
  }
 
@@ -84,11 +81,10 @@ function mytheme_add_woocommerce_support() {
 add_action( 'after_setup_theme', 'mytheme_add_woocommerce_support' );
 
 
-    
 /**
  * @snippet       Shipping by Weight | WooCommerce
  */
-  
+
 add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
 
 function modify_shipping_rate( $available_shipping_methods, $package ){
@@ -98,7 +94,7 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
     $zone=$shipping_zone->get_zone_name();
     $total_weight = WC()->cart->cart_contents_weight;
     $total_coast = WC()->cart->get_cart_contents_total();
-	
+
 	if($zone=='Barcelona Ciudad'){
 		if($total_coast >= 100  ){
 			unset($available_shipping_methods['apg_shipping:7']);
@@ -106,17 +102,17 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
 		else {
 			unset($available_shipping_methods['free_shipping:9']);
 		}
-		
+
 	}
 	/*
 	elseif ($zone=='Península'){
 		if( $total_weight > 50  ){
         unset($available_shipping_methods['free_shipping:15']); //Remove flat rate for coat abobe 150€
    	 }elseif($total_coast >= 150  ){
-        unset($available_shipping_methods['apg_shipping:17']); // remove free shipping for below 20$ 
+        unset($available_shipping_methods['apg_shipping:17']); // remove free shipping for below 20$
         //$available_shipping_methods['flat_rate:16']; // add 2$ if weight exceeds 10KG
     }else{
-        unset($available_shipping_methods['free_shipping:15']); // remove free shipping for below 20$ 
+        unset($available_shipping_methods['free_shipping:15']); // remove free shipping for below 20$
     }
 
 	}
@@ -132,10 +128,10 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
  * @compatible    WooCommerce 3.6.2
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
- 
+
 //add_action( 'woocommerce_before_checkout_form', 'bbloomer_free_shipping_cart_notice', 10 );
 add_action( 'woocommerce_review_order_before_shipping', 'bbloomer_free_shipping_cart_notice', 10 );
- 	
+
 function bbloomer_free_shipping_cart_notice($shipping_packages){
 
 	global $woocmmerce;
@@ -144,7 +140,7 @@ function bbloomer_free_shipping_cart_notice($shipping_packages){
 	$shipping_packages =  WC()->cart->get_shipping_packages();
 	$shipping_zone = wc_get_shipping_zone( reset( $shipping_packages ) );
     $zone=$shipping_zone->get_zone_name();
-    if(($zone=='Barcelona Ciudad')&& ($current < $min_amount)){ 
+    if(($zone=='Barcelona Ciudad')&& ($current < $min_amount)){
 		$min_amount = 100;
 		$added_text = esc_html__('Consigue envío gratuito comprando ', 'woocommerce' ) . wc_price( $min_amount - $current ) . esc_html__(' más!', 'woocommerce' );
            $return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wc_get_raw_referer() ? wp_validate_redirect( wc_get_raw_referer(), false ) : wc_get_page_permalink( 'shop' ) );
@@ -163,7 +159,7 @@ function bbloomer_free_shipping_cart_notice($shipping_packages){
 
 /**
  * Cambiar el método de pago por defecto
- * 
+ *
  */
 //add_action( 'template_redirect', 'define_default_payment_gateway' );
 function define_default_payment_gateway(){
@@ -176,7 +172,7 @@ function define_default_payment_gateway(){
 }
 /**
  * Personaliza el título en la página de pedido recibido
- * 
+ *
  */
 
 add_filter( 'the_title', 'woo_personalize_order_received_title', 10, 2 );
@@ -208,9 +204,9 @@ function woo_personalize_order_received_title( $title, $id ) {
  * @compatible    WooCommerce 3.5.4
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
- 
+
 add_action( 'woocommerce_after_checkout_validation', 'bbloomer_deny_checkout_if_weight' );
- 
+
 function bbloomer_deny_checkout_if_weight( $posted ) {
 $max_weight = 100;
 if ( WC()->cart->cart_contents_weight > $max_weight ) {
@@ -226,11 +222,11 @@ function remove_product_description_heading() {
  return '';
 }
 
-/** 
+/**
  * remove on single product panel 'Additional Information' since it already says it on tab.
  */
 add_filter('woocommerce_product_additional_information_heading', 'isa_product_additional_information_heading');
- 
+
 function isa_product_additional_information_heading() {
     return '';
 }
@@ -241,13 +237,13 @@ function isa_product_additional_information_heading() {
 // Change the reviews heading to product name
 add_filter( 'gettext', 'misha_no_reviews_heading', 20, 3 );
 function misha_no_reviews_heading( $translated, $text, $domain ) {
- 
+
     if( is_product() && $translated == 'Valoraciones' && $domain == 'woocommerce' ) {
         $translated = '';
     }
- 
+
     return $translated;
- 
+
 }
 
 /**
@@ -264,7 +260,7 @@ function not_a_shop_page() {
 
 // define the woocommerce_single_product_summary callback function
 
-function my_custom_action() { 
+function my_custom_action() {
     echo '<p>This is my custom action function</p>';
 };
 
@@ -292,14 +288,14 @@ function my_custom_action() {
 function custom_checkout_field($checkout)
 
 {
-    
+
 echo '<div id="custom_checkout_field" class="hiddenLocales">
     <h3><label>
-     
+
         <span>' . __('¿Recogida en tienda?') . '</span></label></h3>';
 echo '<div class="wrapper_shop_options">';
 echo '<p>' . __('Para recogida en cualquiera de nuestras tiendas consultar disponibilidad en el 932011513') . '</p>';
-woocommerce_form_field('opcion-tienda', array(  
+woocommerce_form_field('opcion-tienda', array(
 'type' => 'radio',
 'options' => array('Rambla' => 'Rambla de Catalunya, 65 Barcelona', 'Bach' => 'Juan Sebastián Bach, 20, Barcelona', 'Fontcoberta' => 'Fontcoberta, 6, Barcelona', 'Ferran' => 'Ferran, 20, Barcelona', 'Cerdanyola' => 'Avda. de Cerdanyola, 8-10, Sant Cugat del Vallès', 'Arago' => 'Aragó, 241, Barcelona', 'Ayala' => 'Ayala, 3, Madrid' ),
 'class' => array(
@@ -424,11 +420,11 @@ function recoger_tienda_checkout_field( $checkout ) {
  * Añade el campo NIF a la página de checkout de WooCommerce
  */
 add_action( 'woocommerce_before_checkout_billing_form', 'agrega_mi_campo_personalizado' );
- 
+
 function agrega_mi_campo_personalizado( $checkout ) {
- 
+
     //echo '<div id="additional_checkout_field"><h2>' . __('Información adicional') . '</h2>';
- 
+
     echo '<div>';
     woocommerce_form_field( 'nif', array(
         'type'          => 'text',
@@ -437,16 +433,16 @@ function agrega_mi_campo_personalizado( $checkout ) {
         'required'      => false,
         //'placeholder'   => __('Introduzca el Nº NIF-DNI'),
         ), $checkout->get_value( 'nif' ));
- 
+
     echo '</div>';
- 
+
 }
 
 /**
  * Actualiza la información del pedido con el nuevo campo
  */
 add_action( 'woocommerce_checkout_update_order_meta', 'actualizar_info_pedido_con_nuevo_campo' );
- 
+
 function actualizar_info_pedido_con_nuevo_campo( $order_id ) {
     if ( ! empty( $_POST['nif'] ) ) {
         update_post_meta( $order_id, 'NIF', sanitize_text_field( $_POST['nif'] ) );
@@ -463,7 +459,7 @@ function actualizar_info_pedido_con_nuevo_campo( $order_id ) {
  * Muestra custom fields del checkout en la página de edición del pedido
  */
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'mostrar_campo_personalizado_en_admin_pedido', 10, 1 );
- 
+
 function mostrar_campo_personalizado_en_admin_pedido($order){
     echo '<p><strong>'.__('NIF').':</strong> ' . get_post_meta( $order->id, 'NIF', true ) . '</p>';
     echo '<p><strong>'.__('NOTA REGALO').':</strong> ' . get_post_meta( $order->id, 'NOTA REGALO', true ) . '</p>';
@@ -473,9 +469,9 @@ function mostrar_campo_personalizado_en_admin_pedido($order){
 /**
  * Incluye custom fields del checkout en el email de notificación del cliente
  */
- 
+
 add_filter('woocommerce_email_order_meta_keys', 'muestra_campo_personalizado_email');
- 
+
 function muestra_campo_personalizado_email( $keys ) {
     $keys[] = 'NIF';
     return $keys;
@@ -484,12 +480,12 @@ function muestra_campo_personalizado_email( $keys ) {
 /**
 *Incluir custom fields del checkout en la factura (necesario el plugin WooCommerce PDF Invoices & Packing Slips)
 */
- 
+
 add_filter( 'wpo_wcpdf_billing_address', 'incluir_campos_en_factura' );
- 
+
 function incluir_campos_en_factura( $address ){
   global $wpo_wcpdf;
- 
+
   echo $address . '<p>';
   $wpo_wcpdf->custom_field( 'NIF', 'NIF: ' );
   echo '</p>';
@@ -529,7 +525,7 @@ add_action( 'woocommerce_after_order_notes', 'woocommerce_checkout_payment', 20 
 add_action( 'woocommerce_checkout_after_customer_details', 'my_custom_display_payments', 20 );
 
 /**
- * Displaying the Payment Gateways 
+ * Displaying the Payment Gateways
  */
 function my_custom_display_payments() {
   if ( WC()->cart->needs_payment() ) {
@@ -586,12 +582,12 @@ function my_custom_payment_fragment( $fragments ) {
 add_action( 'woocommerce_review_order_before_shipping', 'my_custom_display_shipping_form', 20 );
 
 /**
- * Displaying the Shipping Form 
+ * Displaying the Shipping Form
  */
 function my_custom_display_shipping_form() {
   ?>
   <div class="woocommerce-shipping-fields" id="woocommerce-shipping-fields">
-    <?php 
+    <?php
         $checkout = WC()->checkout();
          if ( true === WC()->cart->needs_shipping_address() ) : ?>
 
@@ -652,7 +648,7 @@ function my_custom_shipping_form( $fragments ) {
 add_action( 'woocommerce_review_order_after_shipping', 'my_custom_display_shipping_options', 20 );
 
 /**
- * Displaying the Shipping Options 
+ * Displaying the Shipping Options
  */
 function my_custom_display_shipping_options() {
   ?>
@@ -695,9 +691,8 @@ function my_custom_payment_fragment_2( $fragments ) {
 //add_filter( 'pre_option_woocommerce_default_gateway' . '__return_false', 99 );
 
 
-
 /**
-Wp_Schedule_Event every day at specific time
+** Wp_Schedule_Event every day at specific time
 **/
 
 function myprefix_custom_cron_schedule( $schedules ) {
