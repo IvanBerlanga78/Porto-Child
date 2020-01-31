@@ -693,7 +693,7 @@ function my_custom_payment_fragment_2( $fragments ) {
 
 
 /**
-Wp_Schedule_Event every day at specific time
+** Wp_Schedule_Event every day at specific time
 **/
 
 function myprefix_custom_cron_schedule( $schedules ) {
