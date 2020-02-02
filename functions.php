@@ -730,13 +730,14 @@ function write_json() {
         // Build an array of matching post titles
         $post_titles = array();
         foreach ($results as $r) {
-            $post_titles[] = addslashes($r->post_title);
+            //$post_titles[] = addslashes($r->post_title);
+						$post_titles[] = $r->post_title;
         }
 
         $fp = fopen('aw_database_data.json', 'w');
         if ( !$fp ) {
           echo 'fopen failed. reason: ', $php_errormsg;
         }
-        fwrite($fp, json_encode($post_titles, JSON_HEX_APOS));
+        fwrite($fp, json_encode($post_titles, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK));
         fclose($fp);
 }
