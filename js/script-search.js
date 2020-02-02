@@ -5,7 +5,7 @@ jQuery(document).ready(function( $ ) {
      */
 
 	$.getJSON("http://lafuente.es/aw_database_data.json", function(json) {
-    
+
     var list = json
 
     new Awesomplete(document.querySelector("#header .searchform input"),{ list: list }); //buscador desktop
@@ -15,7 +15,7 @@ jQuery(document).ready(function( $ ) {
 	 /*
      * Aperturas y cierres Buscador
      */
-    
+
      $('.search-trigger').click(function() {
         $('.search-overlay').addClass("visible");
     });
@@ -27,11 +27,11 @@ jQuery(document).ready(function( $ ) {
 
     $('#header .searchform input').on('click focusin', function() {
     this.value = '';
-	}); 
+	});
 
 	$('#search').on('click focusin', function() {
     this.value = '';
-	}); 
+	});
 
     $(document).click(function(event) {
       //if you click on anything except the modal itself or the "open modal" link, close the modal
@@ -41,12 +41,12 @@ jQuery(document).ready(function( $ ) {
     });
 
 	document.querySelector('#header .searchform input').addEventListener("awesomplete-selectcomplete", function(event) {
-	     	var myForm = document.querySelector("#header .searchform"); 
+	     	var myForm = document.querySelector("#header .searchform");
 			myForm.submit();
 	});
 
 	document.querySelector('#search').addEventListener("awesomplete-selectcomplete", function(event) {
-	     	var myForm = document.querySelector("#awesoform"); 
+	     	var myForm = document.querySelector("#awesoform");
 			myForm.submit();
 	});
 
