@@ -697,7 +697,7 @@ function my_custom_payment_fragment_2( $fragments ) {
 
 function myprefix_custom_cron_schedule( $schedules ) {
     $schedules['every_six_hours'] = array(
-        'interval' => 21600, // Every 6 hours
+        'interval' => 3600, // Every 6 hours
         'display'  => __( 'Every 6 hours' ),
     );
     return $schedules;
