@@ -6,6 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46831237-2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-46831237-2');
+	</script>
+
 
 	<?php get_template_part( 'head' ); ?>
 </head>
@@ -77,7 +87,7 @@ if ( ( is_front_page() && is_home() ) || is_front_page() ) {
 	do_action( 'porto_before_wrapper' );
 ?>
 
-	
+
 
 	<div class="page-wrapper<?php echo ! $header_is_side ? '' : ' side-nav', isset( $porto_settings['header-side-position'] ) && $porto_settings['header-side-position'] ? ' side-nav-right' : ''; ?>"><!-- page wrapper -->
 
@@ -123,7 +133,7 @@ if ( ( is_front_page() && is_home() ) || is_front_page() ) {
 							</a>
 							<label for="search">Buscar en Lafuente</label>
 							<form id="awesoform" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get" class="searchform searchform-cats">
-							    
+
 							    <input type="hidden" value="product" name="post_type" id="post_type" />
 							    <input type="text" name="s" id="search" value="<?php the_search_query(); ?>" />
 							    <button class="btn btn-special" title="Search" type="submit">	<i class="fas fa-search"></i>
@@ -131,12 +141,12 @@ if ( ( is_front_page() && is_home() ) || is_front_page() ) {
 							    <!--<input type="submit" alt="Search"/>-->
 							</form>
 						</div>
-						
+
 					</div>
-					
-				</div>	
+
 				</div>
-				
+				</div>
+
 				<?php
 					get_template_part( 'header/header' );
 				?>
