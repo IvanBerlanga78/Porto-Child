@@ -710,10 +710,10 @@ if ( ! wp_next_scheduled( 'myprefix_cron_hook' ) ) {
 }
 
 ///Hook into that action that'll fire every six hours
- //add_action( 'myprefix_cron_hook', 'write_json' );
+ add_action( 'myprefix_cron_hook', 'write_json' );
 
  ///Hook into that action that'll fire every six hours
-  add_action( 'wp_footer', 'write_json' );
+//  add_action( 'wp_footer', 'write_json' );
 
 //create your function, that runs on cron
 function write_json() {
