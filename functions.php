@@ -685,7 +685,7 @@ function my_custom_payment_fragment_2( $fragments ) {
 // Once an option is choosen, it will be the default option from that moment onwards.
 
 // Code to clear default shipping option.
-//add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
+add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
 
 // Code to clear default payment option.
 //add_filter( 'pre_option_woocommerce_default_gateway' . '__return_false', 99 );
