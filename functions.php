@@ -691,7 +691,7 @@ add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
 add_filter( 'pre_option_woocommerce_default_gateway' . '__return_false', 99 );
 
 // Validate shipping method fields and returning an error if none is choosed
-add_action( 'woocommerce_checkout_process', 'shipping_method_validation', 20 );
+//add_action( 'woocommerce_checkout_process', 'shipping_method_validation', 20 );
 function shipping_method_validation() {
     if ( ! isset( $_POST['shipping_method[0]'] ) ){
         wc_add_notice( __( "Debes elegir una forma de envío.", "woocommerce" ), 'error' );
