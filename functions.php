@@ -495,8 +495,10 @@ function incluir_campos_en_factura( $address ){
   echo '</p>';
 
   echo '<p>';
-	$local = $wpo_wcpdf->custom_field( 'RECOGER EN LOCAL', 'RECOGER EN LOCAL: ' );
-	echo $local;
+	$local = $wpo_wcpdf->custom_field( 'RECOGER EN LOCAL');
+	if !($local=="BLANK") {
+		echo "RECOGER EN: ". $local;
+	}
 
   echo '</p>';
 }
