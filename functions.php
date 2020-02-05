@@ -714,7 +714,7 @@ function reset_previous_chosen_shipping_method() {
 
 function myprefix_custom_cron_schedule( $schedules ) {
     $schedules['every_six_hours'] = array(
-        'interval' => 3600, // Every 6 hours
+        'interval' => 86400, // Every 24 hours
         'display'  => __( 'Every 6 hours' ),
     );
     return $schedules;
