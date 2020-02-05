@@ -698,6 +698,15 @@ function shipping_method_validation() {
     }
 }
 
+// Reset the last chosen shipping method using in checkout page (for logged in customers):
+add_action( 'template_redirect', 'reset_previous_chosen_shipping_method' );
+function reset_previous_chosen_shipping_method() {
+    if( is_checkout() && ! is_wc_endpoint_url() && is_user_logged_in()
+    && get_user_meta( get_current_user_id(), 'shipping_method', true ) ) {
+        delete_user_meta( get_current_user_id(), 'shipping_method' );
+        WC()->session->__unset( 'chosen_shipping_methods' );
+    }
+}
 
 /**
 ** Wp_Schedule_Event every day at specific time
