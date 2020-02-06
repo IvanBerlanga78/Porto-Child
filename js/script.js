@@ -1,16 +1,16 @@
 /*
  * Comportamiento de apertura y cierre del modal buscador
- * 
+ *
  */
 
 jQuery(document).ready(function( $ ) {
 
     if($('body').is('.woocommerce-checkout') && !$('body').is('.woocommerce-checkout.woocommerce-order-received') ){
 
-    //$(".woocommerce-checkout .panel .button").click(function(){});    
+    //$(".woocommerce-checkout .panel .button").click(function(){});
     $(".woocommerce-checkout form.woocommerce-checkout").validate({
       debug: false,
-      onkeyup: function(element) {$(element).valid()}, 
+      onkeyup: function(element) {$(element).valid()},
       rules: {
             nif: {
                 required: false,
@@ -95,17 +95,16 @@ jQuery(document).ready(function( $ ) {
 
 
     jQuery( document.body ).on( 'updated_checkout', function(){
-      
+
 
         if($('#shipping_method_0_local_pickup5').is(':checked')|| $('#shipping_method_0_local_pickup30').is(':checked')) {
              $('.recoger_local').show();
         }else {
             $('.recoger_local').hide();
         }
- 
-  console.log('on updated_shipping_method: function fired'); 
+
 });
-  
+
 
 
 
@@ -118,27 +117,27 @@ jQuery.extend(theme.WooWidgetToggle.prototype, {
 
     build: function() {
         var $el = this.options.wrapper;
-        
-            
+
+
             //$el.parent().addClass('closed');
-            
-            
+
+
             if (window.location.href.indexOf("?filter") > -1){
                 $('.woocommerce-widget-layered-nav ul').show();
                 /*$(".woocommerce-widget-layered-nav-list li.woocommerce-widget-layered-nav-list__item--chosen")
                 .parent().show(200,function() {
-                                                    
-    
+
+
                 //$el.parent().removeClass('closed');
                 console.log("done");
                 });*/
             }else {
                 $('.woocommerce-widget-layered-nav ul').hide();
             }
-            
-            
+
+
             if (!$el.find('.toggle').length) {
-                
+
                 $el.append('<span class="toggle"></span>');
             }
             $el.find('.toggle').click(function() {
@@ -156,11 +155,4 @@ jQuery.extend(theme.WooWidgetToggle.prototype, {
     });
 
 
-}); //end document-ready// 
-
-
-
-
-    
-    
-    
+}); //end document-ready//

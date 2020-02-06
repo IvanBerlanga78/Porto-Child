@@ -22,12 +22,12 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
 		<div class="row" id="customer_details">
-			
+
 
 			<div class="col-lg-5">
 				<div class="align-left sticky">
 					<div class="box-content">
-						
+
 
 						<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
@@ -35,7 +35,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							<?php do_action( 'woocommerce_checkout_order_review' ); ?>
 						</div>
 
-						
+
 					</div>
 
 
@@ -54,7 +54,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    </div>
 							 <h4><a href="#"><span class="number">2</span>Seleccionar Método de Pago</a></h4>
 							    <div class="panel">
-							        <?php 
+							        <?php
 							      	/* Pago */
 							      	do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
@@ -65,7 +65,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    <div class="panel">
 							        <?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
 							      	<!-- Envío -->
-							      
+
 							      	<!-- End Envío -->
 							      	<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
 							      	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
@@ -74,18 +74,18 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    </div>
 							 <h4><a href="#"><span class="number">4</span>Finalizar Compra</a></h4>
 							    <div class="panel">
-							        <?php 
+							        <?php
 							      	/* Pago */
 							      	do_action( 'woocommerce_checkout_shipping' ); ?>
-							        <a class="button previuous">Anterior</a>
+							        
 							    </div>
 						</div>
-					
+
 				</div>
 			</div>
 		</div>
 
-		
+
 
 	<?php endif; ?>
 

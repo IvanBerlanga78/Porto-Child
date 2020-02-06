@@ -121,6 +121,7 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
     return $available_shipping_methods;
 }
 
+
 /**
  * @snippet       Notice with $$$ remaining to Free Shipping @ WooCommerce Cart
  * @how-to        Watch tutorial @ https://businessbloomer.com/?p=19055
@@ -129,12 +130,11 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
 
-//add_action( 'woocommerce_before_checkout_form', 'bbloomer_free_shipping_cart_notice', 10 );
 add_action( 'woocommerce_review_order_before_shipping', 'bbloomer_free_shipping_cart_notice', 10 );
 
 function bbloomer_free_shipping_cart_notice($shipping_packages){
 
-	global $woocmmerce;
+	global $woocommerce;
 	$min_amount = 100;
 	$current = WC()->cart->subtotal;
 	$shipping_packages =  WC()->cart->get_shipping_packages();
@@ -142,9 +142,9 @@ function bbloomer_free_shipping_cart_notice($shipping_packages){
     $zone=$shipping_zone->get_zone_name();
     if(($zone=='Barcelona Ciudad')&& ($current < $min_amount)){
 		$min_amount = 100;
-		$added_text = esc_html__('Consigue envío gratuito comprando ', 'woocommerce' ) . wc_price( $min_amount - $current ) . esc_html__(' más!', 'woocommerce' );
+		$added_text = esc_html__('Consíguelo comprando ', 'woocommerce' ) . wc_price( $min_amount - $current ) . esc_html__(' más!', 'woocommerce' );
            $return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wc_get_raw_referer() ? wp_validate_redirect( wc_get_raw_referer(), false ) : wc_get_page_permalink( 'shop' ) );
-           $notice = sprintf( '<a href="%s" style="text-decoration:underline;" class="wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( '¿Quieres continuar comprando?', 'woocommerce' ), $added_text );
+           $notice = sprintf( '<a href="%s" style="text-decoration:underline;" class="wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( '¿Quieres envío gratuito?', 'woocommerce' ), $added_text );
            wc_print_notice( $notice, 'notice' );
 
     }
@@ -158,18 +158,34 @@ function bbloomer_free_shipping_cart_notice($shipping_packages){
 }
 
 /**
- * Cambiar el método de pago por defecto
- *
+ * Adding the message options fragment to the WC order review AJAX response
  */
-//add_action( 'template_redirect', 'define_default_payment_gateway' );
-function define_default_payment_gateway(){
-    if( is_checkout() && ! is_wc_endpoint_url() ) {
-        // HERE define the default payment gateway ID
-        $default_payment_id = 'payment_method_redsys';
+//add_filter( 'woocommerce_update_order_review_fragments', 'my_custom_payment_fragment_3' );
 
-        WC()->session->set( 'chosen_payment_method', $default_payment_id );
-    }
+/**
+ * Adding our payment gateways to the fragment #checkout_payments so that this HTML is replaced with the updated one.
+ */
+function my_custom_payment_fragment_3( $fragments ) {
+    ob_start();
+
+    bbloomer_free_shipping_cart_notice();
+
+    $html = ob_get_clean();
+
+    $fragments['.websites-depot-checkout-review-shipping-table'] = $html;
+
+    return $fragments;
 }
+
+/**
+ * Changes the redirect URL for the Return To Shop button in the cart.
+ *
+ * @return string
+ */
+function wc_empty_cart_redirect_url() {
+	return '/';
+}
+add_filter( 'woocommerce_return_to_shop_redirect', 'wc_empty_cart_redirect_url' );
 /**
  * Personaliza el título en la página de pedido recibido
  *
@@ -358,6 +374,22 @@ function my_custom_checkout_field_update_order_meta( $order_id ) {
      wc_add_notice( '<strong>Please select a day part under Delivery options</strong>', 'error' );
  }
 
+ add_action( 'woocommerce_before_order_notes', 'allclean_add_checkout_content', 12 );
+ function allclean_add_checkout_content() {
+     // set your special category name, slug or ID here:
+     $special_cat = 'ticket';
+     $bool = false;
+     foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+         $item = $cart_item['data'];
+         if ( has_term( $special_cat, 'product_cat', $item->id ) )
+             $bool = true;
+     }
+     // If the special cat is detected in one items of the cart
+     // It displays the message
+     if ($bool)
+         echo '<div class="woocommerce-message" role="alert">Este producto no tiene envío.</div>';
+ }
+
 /**
  * Display field value on the order edit page
  */
@@ -401,7 +433,7 @@ function recoger_tienda_checkout_field( $checkout ) {
     woocommerce_form_field( 'recoger-local', array(
         'type'          => 'select',
         'class'         => array('recoger_local form-row-wide'),
-        'label'         => __('Elige el local (sólo si has seleccionado esta forma de envío)'),
+        'label'         => __('Importante: llama antes al +34 932 011 513 para consultar disponibilidad.'),
         'options'       => array(
             ''     => __( 'Selecciona una tienda', 'porto' ),
             'Rambla'   => __( 'Rambla de Catalunya, 65 Barcelona', 'porto' ),
@@ -419,23 +451,19 @@ function recoger_tienda_checkout_field( $checkout ) {
 /**
  * Añade el campo NIF a la página de checkout de WooCommerce
  */
-add_action( 'woocommerce_before_checkout_billing_form', 'agrega_mi_campo_personalizado' );
+add_filter( 'woocommerce_checkout_fields', 'agrega_mi_campo_personalizado' );
 
-function agrega_mi_campo_personalizado( $checkout ) {
+function agrega_mi_campo_personalizado( $fields) {
 
-    //echo '<div id="additional_checkout_field"><h2>' . __('Información adicional') . '</h2>';
+	$fields['billing']['nif'] = array(
+		'type'          => 'text',
+		'class'         => array('form-row-wide'),
+		'label'         => __('NIF-DNI'),
+		'required'      => false,
+		'priority' => '40',
+	);
 
-    echo '<div>';
-    woocommerce_form_field( 'nif', array(
-        'type'          => 'text',
-        'class'         => array('my-field-class form-row-wide'),
-        'label'         => __('NIF-DNI'),
-        'required'      => false,
-        //'placeholder'   => __('Introduzca el Nº NIF-DNI'),
-        ), $checkout->get_value( 'nif' ));
-
-    echo '</div>';
-
+	return $fields;
 }
 
 /**
@@ -470,11 +498,12 @@ function mostrar_campo_personalizado_en_admin_pedido($order){
  * Incluye custom fields del checkout en el email de notificación del cliente
  */
 
-add_filter('woocommerce_email_order_meta_keys', 'muestra_campo_personalizado_email');
+add_filter('woocommerce_email_order_meta', 'muestra_campo_personalizado_email');
 
-function muestra_campo_personalizado_email( $keys ) {
-    $keys[] = 'NIF';
-    return $keys;
+function muestra_campo_personalizado_email( $order_obj ) {
+		$nif = get_post_meta( $order_obj->get_order_number(), 'nif', true );
+
+		echo "DNI/NIF: $nif ";
 }
 
 /**
