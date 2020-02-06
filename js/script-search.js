@@ -4,7 +4,7 @@ jQuery(document).ready(function( $ ) {
      * obtiene la lista de productos e inicia el awesomplete en los buscadores
      */
 
-	$.getJSON("http://lafuente.es/aw_database_data.json", function(json) {
+	$.getJSON("/aw_database_data.json", function(json) {
 
     var list = json
 
