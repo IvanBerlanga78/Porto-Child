@@ -1395,7 +1395,9 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
     display:none;
 }
 
-
+.vc_custom_1574097237040 .post-carousel {
+	max-height: 350px;
+}
 .product-summary-wrap .product_meta span span.stock{
     color: #fff;
     background: #cd5c5c;
