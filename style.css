@@ -307,8 +307,7 @@ ul.products li.product-col h3 { color: #000; font-weight: 500; }
 }
 
 #footer .footer-bottom{
-    border-top: 1px solid;
-
+  background-color: #1d1d1d;
 }
 
 .intro p {
