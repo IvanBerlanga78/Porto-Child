@@ -221,14 +221,14 @@ function woo_personalize_order_received_title( $title, $id ) {
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
 
-add_action( 'woocommerce_after_checkout_validation', 'bbloomer_deny_checkout_if_weight' );
+//add_action( 'woocommerce_after_checkout_validation', 'bbloomer_deny_checkout_if_weight' );
 
 function bbloomer_deny_checkout_if_weight( $posted ) {
-$max_weight = 100;
-if ( WC()->cart->cart_contents_weight > $max_weight ) {
-   $notice = 'Lo sentimos, el peso de tu pedido excede nuestro máximo de  ' . $max_weight . get_option( 'woocommerce_weight_unit' );
-   wc_add_notice( $notice, 'error' );
-}
+	$max_weight = 100;
+	if ( WC()->cart->cart_contents_weight > $max_weight ) {
+	   $notice = 'Lo sentimos, el peso de tu pedido excede nuestro máximo de  ' . $max_weight . get_option( 'woocommerce_weight_unit' );
+	   wc_add_notice( $notice, 'error' );
+	}
 }
 
 
