@@ -7,73 +7,6 @@ jQuery(document).ready(function( $ ) {
 
     if($('body').is('.woocommerce-checkout') && !$('body').is('.woocommerce-checkout.woocommerce-order-received') ){
 
-    //$(".woocommerce-checkout .panel .button").click(function(){});
-    $(".woocommerce-checkout form.woocommerce-checkout").validate({
-      debug: false,
-      onkeyup: function(element) {$(element).valid()},
-      rules: {
-            nif: {
-                required: false,
-            },
-            billing_first_name: {
-                required: true,
-                minlength: 3
-            },
-            billing_last_name: {
-                required: true,
-                minlength: 3
-            },
-            billing_country: {
-                required: true
-            },
-            billing_address_1: {
-                required: true
-            },
-            billing_postcode: {
-                required: true
-            },
-            billing_city: {
-                required: true
-            },
-            billing_state: {
-                required: true
-            },
-            billing_phone: {
-                required: true
-            },
-            // compound rule
-            email: {
-              required: true,
-              email: true
-            },
-            shipping_first_name: {
-                required: true,
-            },
-            shipping_last_name: {
-                required: true,
-                minlength: 3
-            },
-            shipping_country: {
-                required: true
-            },
-            shipping_address_1: {
-                required: true
-            },
-            shipping_postcode: {
-                required: true
-            },
-            shipping_city: {
-                required: true
-            },
-            shipping_state: {
-                required: true
-            },
-            shipping_phone: {
-                required: true
-            }
-          }
-    });
-
     //Botones acordeón Checkout
     $('#accordion').accordion({
         heightStyle: "content",
@@ -84,7 +17,7 @@ jQuery(document).ready(function( $ ) {
         }
     }
     });
-    $('#accordion .button').click(function (e) {
+    $('#accordion .btn').click(function (e) {
         e.preventDefault();
         var delta = ($(this).is('.next') ? 1 : -1);
         $('#accordion').accordion('option', 'active', ($('#accordion').accordion('option', 'active') + delta));

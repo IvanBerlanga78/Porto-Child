@@ -90,12 +90,12 @@ add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
 function modify_shipping_rate( $available_shipping_methods, $package ){
 
     global $woocommerce;
-		$shipping_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+	$shipping_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
     $zone=$shipping_zone->get_zone_name();
     $total_weight = WC()->cart->cart_contents_weight;
     $total_coast = WC()->cart->get_cart_contents_total();
 
-	if ( $zone=='Barcelona Ciudad' ){
+	if($zone=='Barcelona Ciudad'){
 		if($total_coast >= 100  ){
 			unset($available_shipping_methods['apg_shipping:7']);
 		}
@@ -130,7 +130,7 @@ function modify_shipping_rate( $available_shipping_methods, $package ){
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
 
-add_action( 'woocommerce_review_order_before_shipping', 'bbloomer_free_shipping_cart_notice', 10 );
+//add_action( 'woocommerce_review_order_before_shipping', 'bbloomer_free_shipping_cart_notice', 10 );
 
 function bbloomer_free_shipping_cart_notice($shipping_packages){
 
@@ -221,22 +221,14 @@ function woo_personalize_order_received_title( $title, $id ) {
  * @donate $9     https://businessbloomer.com/bloomer-armada/
  */
 
-//add_action( 'woocommerce_check_cart_items', 'bbloomer_deny_checkout_if_weight' );
+//add_action( 'woocommerce_after_checkout_validation', 'bbloomer_deny_checkout_if_weight' );
 
 function bbloomer_deny_checkout_if_weight( $posted ) {
-
-	global $woocommerce;
-	$max_weight = 100;
-	$shipping_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
-  $zone = $shipping_zone -> get_zone_name();
-	if($zone!='Barcelona Ciudad'){
-
-		if ( WC()->cart->cart_contents_weight > $max_weight ) {
-			 $notice = 'Lo sentimos, el peso de tu pedido excede nuestro máximo de  ' . $max_weight . get_option( 'woocommerce_weight_unit' );
-			 wc_add_notice( $notice, 'error' );
-		}
-	}
-
+$max_weight = 100;
+if ( WC()->cart->cart_contents_weight > $max_weight ) {
+   $notice = 'Lo sentimos, el peso de tu pedido excede nuestro máximo de  ' . $max_weight . get_option( 'woocommerce_weight_unit' );
+   wc_add_notice( $notice, 'error' );
+}
 }
 
 
