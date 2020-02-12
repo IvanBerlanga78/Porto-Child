@@ -1424,6 +1424,10 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
   display: none;
 }
 
+.tx_single > p, .tx_single > ul {
+    display: none;
+}
+
 @media (max-width: 900px) {
     .awesomplete ul{
         list-style-type: none;
