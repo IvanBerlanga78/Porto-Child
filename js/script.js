@@ -2,7 +2,7 @@
  * Comportamiento de apertura y cierre del modal buscador
  *
  */
-
+ 
 jQuery(document).ready(function( $ ) {
 
     if($('body').is('.woocommerce-checkout') && !$('body').is('.woocommerce-checkout.woocommerce-order-received') ){
