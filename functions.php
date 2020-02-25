@@ -343,21 +343,6 @@ function my_custom_checkout_field_update_order_meta( $order_id ) {
      wc_add_notice( '<strong>Please select a day part under Delivery options</strong>', 'error' );
  }
 
- add_action( 'woocommerce_before_order_notes', 'allclean_add_checkout_content', 12 );
- function allclean_add_checkout_content() {
-     // set your special category name, slug or ID here:
-     $special_cat = 'ticket';
-     $bool = false;
-     foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-         $item = $cart_item['data'];
-         if ( has_term( $special_cat, 'product_cat', $item->id ) )
-             $bool = true;
-     }
-     // If the special cat is detected in one items of the cart
-     // It displays the message
-     if ($bool)
-         echo '<div class="woocommerce-message" role="alert">Este producto no tiene envío.</div>';
- }
 
 /**
  * Display field value on the order edit page
