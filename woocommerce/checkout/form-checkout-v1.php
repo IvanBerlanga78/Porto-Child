@@ -76,7 +76,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    <div class="panel">
 							        <?php
 							      	/* Pago */
-							      	do_action( 'woocommerce_checkout_shipping' ); ?>
+							      		do_action( 'woocommerce_checkout_shipping' ); ?>
 											<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
 

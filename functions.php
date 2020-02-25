@@ -295,37 +295,6 @@ function my_custom_action() {
         }
 
 
-/**
-* Add custom field to the checkout page - Recogida en tienda
-*/
-
-//add_action('woocommerce_review_order_after_shipping', 'custom_checkout_field');
-
-function custom_checkout_field($checkout)
-
-{
-
-echo '<div id="custom_checkout_field" class="hiddenLocales">
-    <h3><label>
-
-        <span>' . __('¿Recogida en tienda?') . '</span></label></h3>';
-echo '<div class="wrapper_shop_options">';
-echo '<p>' . __('Para recogida en cualquiera de nuestras tiendas consultar disponibilidad en el 932011513') . '</p>';
-woocommerce_form_field('opcion-tienda', array(
-'type' => 'radio',
-'options' => array('Rambla' => 'Rambla de Catalunya, 65 Barcelona', 'Bach' => 'Juan Sebastián Bach, 20, Barcelona', 'Fontcoberta' => 'Fontcoberta, 6, Barcelona', 'Ferran' => 'Ferran, 20, Barcelona', 'Cerdanyola' => 'Avda. de Cerdanyola, 8-10, Sant Cugat del Vallès', 'Arago' => 'Aragó, 241, Barcelona', 'Ayala' => 'Ayala, 3, Madrid' ),
-'class' => array(
-'my-field-class form-row-wide'
-) ,
-'label' => __('Selecciona una tienda') ,
-'placeholder' => __('Selecciona la tienda') ,
-'input_class' => array(
-'option-input radio')   ,
-) ,
-$checkout->get_value('opcion-tienda'));
-echo '</div>';
-echo '</div>';
-}
 
 
 /**
@@ -436,6 +405,7 @@ function recoger_tienda_checkout_field( $checkout ) {
         'label'         => __('Importante: llama antes al +34 932 011 513 para consultar disponibilidad.'),
         'options'       => array(
             ''     => __( 'Selecciona una tienda', 'porto' ),
+						'Bach'   => __( 'Juan Sebastián Bach, 20 Barcelona', 'porto' ),
             'Rambla'   => __( 'Rambla de Catalunya, 65 Barcelona', 'porto' ),
             'Ferran' => __( 'Ferran, 20, Barcelona', 'porto' ),
             'Cerdanyola'   => __( 'Avda. de Cerdanyola, 8-10, Sant Cugat del Vallès', 'porto' ),
@@ -602,9 +572,7 @@ function my_custom_payment_fragment( $fragments ) {
 
     return $fragments;
 }
-?>
 
-<?php
 /**
  * Moving the shipping form
  */
@@ -652,7 +620,7 @@ function my_custom_display_shipping_form() {
 /**
  * Adding the shipping fragment to the WC order review AJAX response
  */
-//add_filter( 'woocommerce_update_order_review_fragments', 'my_custom_shipping_form' );
+add_filter( 'woocommerce_update_order_review_fragments', 'my_custom_shipping_form' );
 
 /**
  * Adding shipping form data to #checkout_payments so that this HTML is replaced with the updated one.
@@ -664,7 +632,7 @@ function my_custom_shipping_form( $fragments ) {
 
     $html = ob_get_clean();
 
-    $fragments['#woocommerce-shipping-fields'] = $html;
+    $fragments['.websites-depot-checkout-review-shipping-table'] = $html;
 
     return $fragments;
 }
@@ -714,7 +682,7 @@ function my_custom_payment_fragment_2( $fragments ) {
 // Once an option is choosen, it will be the default option from that moment onwards.
 
 // Code to clear default shipping option.
-add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
+//add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
 
 // Code to clear default payment option.
 add_filter( 'pre_option_woocommerce_default_gateway' . '__return_false', 99 );
@@ -728,14 +696,16 @@ function shipping_method_validation() {
 }
 
 // Reset the last chosen shipping method using in checkout page (for logged in customers):
-add_action( 'template_redirect', 'reset_previous_chosen_shipping_method' );
-function reset_previous_chosen_shipping_method() {
+//add_action( 'template_redirect', 'reset_previous_chosen_shipping_method_2' );
+function reset_previous_chosen_shipping_method_2() {
     if( is_checkout() && ! is_wc_endpoint_url() && is_user_logged_in()
     && get_user_meta( get_current_user_id(), 'shipping_method', true ) ) {
         delete_user_meta( get_current_user_id(), 'shipping_method' );
         WC()->session->__unset( 'chosen_shipping_methods' );
     }
 }
+
+
 
 /**
 ** Wp_Schedule_Event every day at specific time

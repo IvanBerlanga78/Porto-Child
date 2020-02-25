@@ -2,7 +2,7 @@
  * Comportamiento de apertura y cierre del modal buscador
  *
  */
- 
+
 jQuery(document).ready(function( $ ) {
 
     if($('body').is('.woocommerce-checkout') && !$('body').is('.woocommerce-checkout.woocommerce-order-received') ){
@@ -22,6 +22,7 @@ jQuery(document).ready(function( $ ) {
         var delta = ($(this).is('.next') ? 1 : -1);
         $('#accordion').accordion('option', 'active', ($('#accordion').accordion('option', 'active') + delta));
     });
+
 
 }//end if//
 
