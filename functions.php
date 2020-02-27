@@ -742,3 +742,10 @@ function write_json() {
         fwrite($fp, json_encode($post_titles, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK));
         fclose($fp);
 }
+
+
+add_filter('woocommerce_default_address_fields', 'override_default_address_checkout_fields', 20, 1);
+function override_default_address_checkout_fields( $address_fields ) {
+    $address_fields['address_1']['placeholder'] = 'Nombre de la calle y número';
+    return $address_fields;
+}
