@@ -88,5 +88,4 @@ jQuery.extend(theme.WooWidgetToggle.prototype, {
         }
     });
 
-
 }); //end document-ready//

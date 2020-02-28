@@ -1428,6 +1428,15 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
     display: none;
 }
 
+.main-slider-home .owl-nav  {
+  top: 50%;
+}
+.main-slider-home .owl-carousel .owl-nav .owl-next:before, .main-slider-home .owl-carousel .owl-nav .owl-prev:before {
+    border-top: 3px solid #c7c7c7;
+    border-left: 3px solid #c7c7c7;  {
+
+}
+
 @media (max-width: 900px) {
     .awesomplete ul{
         list-style-type: none;
