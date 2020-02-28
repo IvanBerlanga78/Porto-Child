@@ -478,13 +478,13 @@ function incluir_campos_en_factura( $address ){
   $wpo_wcpdf->custom_field( 'NIF', 'NIF: ' );
   echo '</p>';
 
-  echo '<p>';
+  /* echo '<p>';
   $wpo_wcpdf->custom_field( 'NOTA REGALO', 'NOTA REGALO: ' );
   echo '</p>';
 
   echo '<p>';
   $wpo_wcpdf->custom_field( 'RECOGER EN LOCAL', 'RECOGER EN LOCAL: ' );
-  echo '</p>';
+  echo '</p>';*/
 }
 
 ?>

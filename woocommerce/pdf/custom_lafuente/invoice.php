@@ -143,6 +143,11 @@
 
 <?php do_action( 'wpo_wcpdf_after_order_details', $this->type, $this->order ); ?>
 
+<?php if( !empty( $this->custom_field('NOTA REGALO', '<strong>Nota Regalo:</strong>') ) ) : ?><?php $this->custom_field('NOTA REGALO', '<strong>Nota Regalo:</strong>'); ?><?php endif; ?>
+<?php echo '<br>' ?>
+<?php if( !empty( $this->custom_field('RECOGER EN LOCAL', '<strong>Recoger en local:</strong>') ) ) : ?><?php $this->custom_field('RECOGER EN LOCAL', '<strong>Recoger en local:</strong>'); ?><?php endif; ?>
+
+
 <?php if ( $this->get_footer() ): ?>
 <div id="footer">
 	<?php $this->footer(); ?>
