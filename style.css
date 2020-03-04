@@ -466,8 +466,12 @@ ul.products li.product-col h3 { color: #000; font-weight: 500; }
 }
 
 #mailpoet_form_1 .mailpoet_form {
-    width: 308px;
+    width: 318px;
     margin: 0 auto;
+}
+
+#mailpoet_form_1 .mailpoet_text {
+      width: 216px!important;
 }
 
 .clearfix {
