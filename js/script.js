@@ -1,9 +1,10 @@
-/*
- * Comportamiento de apertura y cierre del modal buscador
- *
- */
 
 jQuery(document).ready(function( $ ) {
+
+    /*
+   * Comportamiento de apertura y cierre del modal buscador
+   *
+   */
 
     if($('body').is('.woocommerce-checkout') && !$('body').is('.woocommerce-checkout.woocommerce-order-received') ){
 
@@ -23,10 +24,7 @@ jQuery(document).ready(function( $ ) {
         $('#accordion').accordion('option', 'active', ($('#accordion').accordion('option', 'active') + delta));
     });
 
-
-}//end if//
-
-
+  }//end if//
 
     jQuery( document.body ).on( 'updated_checkout', function(){
 
@@ -36,11 +34,7 @@ jQuery(document).ready(function( $ ) {
         }else {
             $('.recoger_local').hide();
         }
-
 });
-
-
-
 
  /*
  * Cierra por defecto los acordeones de los filtros de categoria
@@ -52,19 +46,9 @@ jQuery.extend(theme.WooWidgetToggle.prototype, {
     build: function() {
         var $el = this.options.wrapper;
 
-
-            //$el.parent().addClass('closed');
-
-
             if (window.location.href.indexOf("?filter") > -1){
                 $('.woocommerce-widget-layered-nav ul').show();
-                /*$(".woocommerce-widget-layered-nav-list li.woocommerce-widget-layered-nav-list__item--chosen")
-                .parent().show(200,function() {
 
-
-                //$el.parent().removeClass('closed');
-                console.log("done");
-                });*/
             }else {
                 $('.woocommerce-widget-layered-nav ul').hide();
             }

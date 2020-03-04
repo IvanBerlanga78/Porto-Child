@@ -22,14 +22,14 @@ function checkout_scripts() {
     wp_enqueue_script( 'jqueryScrollTo', esc_url( get_stylesheet_directory_uri() ) . '/js/jquery.scrollTo.min.js' );
     wp_enqueue_script( 'jqueryUI', esc_url( get_stylesheet_directory_uri() ) . '/js/jquery-ui.min.js' );
     wp_enqueue_script( 'jquervalidate', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/jquery.validate.min.js' );
-     wp_enqueue_script( 'jquervalidate_aditional_methods', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/additional-methods.min.js' );
-     wp_enqueue_script( 'jquervalidate_localization', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/localization/messages_es.min.js' );
+    wp_enqueue_script( 'jquervalidate_aditional_methods', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/additional-methods.min.js' );
+    wp_enqueue_script( 'jquervalidate_localization', esc_url( get_stylesheet_directory_uri() ) . '/js/jqueryvalidation/localization/messages_es.min.js' );
     };
 }
 
 add_action( 'wp_enqueue_scripts', 'general_script', 12 );
 function general_script() {
-    wp_enqueue_script( 'general_script', esc_url( get_stylesheet_directory_uri() ) . '/js/script.js' );
+	wp_enqueue_script( 'general_script', esc_url( get_stylesheet_directory_uri() ) . '/js/script.js' );
 }
 
 add_action( 'wp_enqueue_scripts', 'awesomplete_script', 12 );
@@ -41,11 +41,11 @@ function awesomplete_script() {
 
 }
 
-//add_action( 'wp_enqueue_scripts', 'popup_script', 12 );
+add_action( 'wp_enqueue_scripts', 'popup_script', 12 );
 
 			function popup_script() {
 			    wp_enqueue_script( 'bioep-exit-popup', esc_url( get_stylesheet_directory_uri() ) . '/js/bioep.js' );
-			}
+}
 
 
 add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
@@ -59,9 +59,7 @@ function woo_remove_product_tabs( $tabs ) {
     return $tabs;
  }
 
-
 add_action( 'woocommerce_after_add_to_cart_form', 'get_product_tab_templates_displayed', 2 );
-
 
 function get_product_tab_templates_displayed() {
 
@@ -71,7 +69,6 @@ wc_get_template( 'single-product/tabs/additional-information.php' );
 
 comments_template();
 }
-
 
 
 /**
@@ -284,33 +281,28 @@ function my_custom_action() {
     echo '<p>This is my custom action function</p>';
 };
 
-
 // Product thumbnail in checkout
-        add_filter( 'woocommerce_cart_item_name', 'product_thumbnail_in_checkout', 20, 3 );
-        function product_thumbnail_in_checkout( $product_name, $cart_item, $cart_item_key ){
-            if ( is_checkout() ) {
+add_filter( 'woocommerce_cart_item_name', 'product_thumbnail_in_checkout', 20, 3 );
+function product_thumbnail_in_checkout( $product_name, $cart_item, $cart_item_key ){
+    if ( is_checkout() ) {
 
-                $thumbnail   = $cart_item['data']->get_image(array( 90, 90));
-                $image_html  = '<div class="product-item-thumbnail">'.$thumbnail.'</div> ';
+        $thumbnail   = $cart_item['data']->get_image(array( 90, 90));
+        $image_html  = '<div class="product-item-thumbnail">'.$thumbnail.'</div> ';
 
-                $product_name = $image_html . $product_name;
-            }
-            return $product_name;
-        }
-
-
-
+        $product_name = $image_html . $product_name;
+    }
+    return $product_name;
+}
 
 /**
- * Añade columna a panel de pedidos del dashboard
- */
+* Añade columna a panel de pedidos del dashboard
+*/
 
 add_filter('manage_edit-shop_order_columns', 'misha_order_items_column' );
 function misha_order_items_column( $order_columns ) {
     $order_columns['order_products'] = "Recoge en";
     return $order_columns;
 }
-
 
 /**
  * Muestra la tienda en la que recoge el cliente en la columna del panel de pedidos
@@ -377,7 +369,6 @@ function my_custom_checkout_field( $checkout ) {
     //echo '</div>';
 
 }
-
 
 /**
  * Add the field to the checkout - Recoger en tienda
@@ -478,13 +469,6 @@ function incluir_campos_en_factura( $address ){
   $wpo_wcpdf->custom_field( 'NIF', 'NIF: ' );
   echo '</p>';
 
-  /* echo '<p>';
-  $wpo_wcpdf->custom_field( 'NOTA REGALO', 'NOTA REGALO: ' );
-  echo '</p>';
-
-  echo '<p>';
-  $wpo_wcpdf->custom_field( 'RECOGER EN LOCAL', 'RECOGER EN LOCAL: ' );
-  echo '</p>';*/
 }
 
 ?>
@@ -666,23 +650,9 @@ function my_custom_payment_fragment_2( $fragments ) {
 }
 
 
-
-// To test this code, open a private/incognito window, add an item to the cart and then go to cart page.
-// Once an option is choosen, it will be the default option from that moment onwards.
-
-// Code to clear default shipping option.
-//add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
-
 // Code to clear default payment option.
 add_filter( 'pre_option_woocommerce_default_gateway' . '__return_false', 99 );
 
-// Validate shipping method fields and returning an error if none is choosed
-//add_action( 'woocommerce_checkout_process', 'shipping_method_validation', 20 );
-function shipping_method_validation() {
-    if ( ! isset( $_POST['shipping_method[0]'] ) ){
-        wc_add_notice( __( "Debes elegir una forma de envío.", "woocommerce" ), 'error' );
-    }
-}
 
 // Reset the last chosen shipping method using in checkout page (for logged in customers):
 //add_action( 'template_redirect', 'reset_previous_chosen_shipping_method_2' );
@@ -693,8 +663,6 @@ function reset_previous_chosen_shipping_method_2() {
         WC()->session->__unset( 'chosen_shipping_methods' );
     }
 }
-
-
 
 /**
 ** Wp_Schedule_Event every day at specific time
@@ -716,9 +684,6 @@ if ( ! wp_next_scheduled( 'myprefix_cron_hook' ) ) {
 
 ///Hook into that action that'll fire every six hours
  add_action( 'myprefix_cron_hook', 'write_json' );
-
- ///Hook into that action that'll fire every six hours
-//  add_action( 'wp_footer', 'write_json' );
 
 //create your function, that runs on cron
 function write_json() {
@@ -746,7 +711,6 @@ function write_json() {
         fwrite($fp, json_encode($post_titles, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK));
         fclose($fp);
 }
-
 
 add_filter('woocommerce_default_address_fields', 'override_default_address_checkout_fields', 20, 1);
 function override_default_address_checkout_fields( $address_fields ) {
