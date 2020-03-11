@@ -34,6 +34,7 @@ jQuery(document).ready(function( $ ) {
         }else {
             $('.recoger_local').hide();
         }
+
 });
 
  /*

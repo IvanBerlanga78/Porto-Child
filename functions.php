@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 add_action( 'wp_enqueue_scripts', 'porto_child_css', 1001 );
 
 // Load CSS
@@ -83,82 +85,6 @@ add_action( 'after_setup_theme', 'mytheme_add_woocommerce_support' );
 
 
 /**
- * @snippet       Shipping by Weight | WooCommerce
- */
-
-add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
-
-function modify_shipping_rate( $available_shipping_methods, $package ){
-
-    global $woocommerce;
-	$shipping_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
-    $zone=$shipping_zone->get_zone_name();
-    $total_weight = WC()->cart->cart_contents_weight;
-    $total_coast = WC()->cart->get_cart_contents_total();
-
-	if($zone=='Barcelona Ciudad'){
-		if($total_coast >= 100  ){
-			unset($available_shipping_methods['apg_shipping:7']);
-		}
-		else {
-			unset($available_shipping_methods['free_shipping:9']);
-		}
-
-	}
-	/*
-	elseif ($zone=='Península'){
-		if( $total_weight > 50  ){
-        unset($available_shipping_methods['free_shipping:15']); //Remove flat rate for coat abobe 150€
-   	 }elseif($total_coast >= 150  ){
-        unset($available_shipping_methods['apg_shipping:17']); // remove free shipping for below 20$
-        //$available_shipping_methods['flat_rate:16']; // add 2$ if weight exceeds 10KG
-    }else{
-        unset($available_shipping_methods['free_shipping:15']); // remove free shipping for below 20$
-    }
-
-	}
-
-    */
-    return $available_shipping_methods;
-}
-
-
-/**
- * @snippet       Notice with $$$ remaining to Free Shipping @ WooCommerce Cart
- * @how-to        Watch tutorial @ https://businessbloomer.com/?p=19055
- * @author        Rodolfo Melogli
- * @compatible    WooCommerce 3.6.2
- * @donate $9     https://businessbloomer.com/bloomer-armada/
- */
-
-//add_action( 'woocommerce_review_order_before_shipping', 'bbloomer_free_shipping_cart_notice', 10 );
-
-function bbloomer_free_shipping_cart_notice($shipping_packages){
-
-	global $woocommerce;
-	$min_amount = 100;
-	$current = WC()->cart->subtotal;
-	$shipping_packages =  WC()->cart->get_shipping_packages();
-	$shipping_zone = wc_get_shipping_zone( reset( $shipping_packages ) );
-    $zone=$shipping_zone->get_zone_name();
-    if(($zone=='Barcelona Ciudad')&& ($current < $min_amount)){
-		$min_amount = 100;
-		$added_text = esc_html__('Consíguelo comprando ', 'woocommerce' ) . wc_price( $min_amount - $current ) . esc_html__(' más!', 'woocommerce' );
-           $return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wc_get_raw_referer() ? wp_validate_redirect( wc_get_raw_referer(), false ) : wc_get_page_permalink( 'shop' ) );
-           $notice = sprintf( '<a href="%s" style="text-decoration:underline;" class="wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( '¿Quieres envío gratuito?', 'woocommerce' ), $added_text );
-           wc_print_notice( $notice, 'notice' );
-
-    }
-	/* elseif($zone=='Península'&& $current < $min_amount){
-        $min_amount = 150;
-		$added_text = esc_html__('Consigue envío gratuito comprando ', 'woocommerce' ) . wc_price( $min_amount - $current ) . esc_html__(' más!', 'woocommerce' );
-   $return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wc_get_raw_referer() ? wp_validate_redirect( wc_get_raw_referer(), false ) : wc_get_page_permalink( 'shop' ) );
-   $notice = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( 'Continuar Comprando', 'woocommerce' ), $added_text );
-   wc_print_notice( $notice, 'notice' );
-    } */
-}
-
-/**
  * Adding the message options fragment to the WC order review AJAX response
  */
 //add_filter( 'woocommerce_update_order_review_fragments', 'my_custom_payment_fragment_3' );
@@ -212,6 +138,8 @@ function woo_personalize_order_received_title( $title, $id ) {
     }
     return $title;
 }
+
+
 
 /**
  * @snippet       Deny Checkout Based on Cart Weight - WooCommerce
@@ -433,6 +361,7 @@ function actualizar_info_pedido_con_nuevo_campo( $order_id ) {
     };
 }
 
+
 /**
  * Muestra custom fields del checkout en la página de edición del pedido
  */
@@ -532,8 +461,8 @@ function my_custom_display_payments() {
 add_filter( 'woocommerce_update_order_review_fragments', 'my_custom_payment_fragment' );
 
 /**
- * Adding our payment gateways to the fragment #checkout_payments so that this HTML is replaced with the updated one.
- */
+* Adding our payment gateways to the fragment #checkout_payments so that this HTML is replaced with the updated one.
+*/
 function my_custom_payment_fragment( $fragments ) {
     ob_start();
 
@@ -717,3 +646,52 @@ function override_default_address_checkout_fields( $address_fields ) {
     $address_fields['address_1']['placeholder'] = 'Nombre de la calle y número';
     return $address_fields;
 }
+
+
+add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
+
+function modify_shipping_rate( $available_shipping_methods, $package){
+
+    global $woocommerce;
+		$shipping_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+    $zone = $shipping_zone->get_zone_name();
+    $total_weight = WC()->cart->cart_contents_weight;
+    $total_cost = WC()->cart->get_cart_contents_total();
+
+
+		switch ($zone) {
+			case 'Barcelona Ciudad':
+
+				if( $total_cost >= 100 ){
+
+  			unset( $available_shipping_methods['apg_shipping:7'] );
+	  		}
+	  		else {
+	  			unset( $available_shipping_methods['free_shipping:9'] );
+	  		}
+
+				break;
+
+				case 'Península':
+				$max_weight = 65;
+				//$rates = disable_shipping_methods ();
+				break;
+		}
+    return $available_shipping_methods;
+}
+
+/*
+* Filter payment gatways
+*/
+function my_custom_available_payment_gateways( $gateways ) {
+
+	 $chosen_shipping_rates = WC()->session->get( 'chosen_shipping_methods' );
+	 // When 'local delivery' has been chosen as shipping rate
+	 if ( in_array( 'flat_rate:8', $chosen_shipping_rates ) ) :
+		 // Remove bank transfer payment gateway
+		 unset( $gateways['bacs'] );
+	 endif;
+	 return $gateways;
+
+}
+add_filter( 'woocommerce_available_payment_gateways', 'my_custom_available_payment_gateways' );
