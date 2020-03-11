@@ -43,11 +43,7 @@ function awesomplete_script() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'popup_script', 12 );
 
-			function popup_script() {
-			    wp_enqueue_script( 'bioep-exit-popup', esc_url( get_stylesheet_directory_uri() ) . '/js/bioep.js' );
-}
 
 
 add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
@@ -226,7 +222,7 @@ function product_thumbnail_in_checkout( $product_name, $cart_item, $cart_item_ke
 * Añade columna a panel de pedidos del dashboard
 */
 
-add_filter('manage_edit-shop_order_columns', 'misha_order_items_column' );
+//add_filter('manage_edit-shop_order_columns', 'misha_order_items_column' );
 function misha_order_items_column( $order_columns ) {
     $order_columns['order_products'] = "Recoge en";
     return $order_columns;
@@ -235,7 +231,7 @@ function misha_order_items_column( $order_columns ) {
 /**
  * Muestra la tienda en la que recoge el cliente en la columna del panel de pedidos
  */
-add_action('manage_shop_order_posts_custom_column','column_page_template',10,2);
+//add_action('manage_shop_order_posts_custom_column','column_page_template',10,2);
 function column_page_template($column_name, $post) {
     global $post, $woocommerce, $the_order;
 
@@ -685,6 +681,8 @@ function modify_shipping_rate( $available_shipping_methods, $package){
 */
 function my_custom_available_payment_gateways( $gateways ) {
 
+	if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+	return;
 	 $chosen_shipping_rates = WC()->session->get( 'chosen_shipping_methods' );
 	 // When 'local delivery' has been chosen as shipping rate
 	 if ( in_array( 'flat_rate:8', $chosen_shipping_rates ) ) :
