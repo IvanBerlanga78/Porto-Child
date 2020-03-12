@@ -60,7 +60,7 @@ jQuery(document).ready(function( $ ) {
     // It creates the image promo Lafuente
         var img = document.createElement('img')
         img.setAttribute('style', 'max-width: 200px; height: auto; box-sizing: border-box; display: block; z-index:9999999')
-        img.setAttribute('src', 'http://lafuente.es/wp-content/uploads/2020/03/dia-del-padre_v02.jpg')
+        img.setAttribute('src', 'https://lafuente.es/wp-content/uploads/2020/03/dia-del-padre_v02.jpg')
         img.setAttribute('class', 'promo-img')
 
 
