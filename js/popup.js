@@ -73,7 +73,7 @@ jQuery(document).ready(function( $ ) {
         p.setAttribute('class', 'info')
 
         // P element text
-            p.innerText = 'Promoción válida para toda España hasta el 16 de marzo de 2020 a las 23:59 horas. Se aplicará un descuento del 10% al introducir el código DIADELPADRE.'
+            p.innerText = 'Promoción válida para toda España hasta el 19 de marzo de 2020 a las 23:59 horas. Se aplicará un descuento del 10% al introducir el código DIADELPADRE.'
 
         // It creates the h2 element of out sticky bar
         var h2 = document.createElement("h2")
