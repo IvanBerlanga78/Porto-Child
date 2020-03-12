@@ -1,5 +1,42 @@
 jQuery(document).ready(function( $ ) {
-(function (){
+
+  function createCookie(name, value, expires, path, domain) {
+    var cookie = name + "=" + escape(value) + ";";
+
+    if (expires) {
+      // If it's a date
+      if(expires instanceof Date) {
+        // If it isn't a valid date
+        if (isNaN(expires.getTime()))
+         expires = new Date();
+      }
+      else
+        expires = new Date(new Date().getTime() + parseInt(expires) * 1000 * 60 * 60 * 24);
+
+      cookie += "expires=" + expires.toGMTString() + ";";
+    }
+
+    if (path)
+      cookie += "path=" + path + ";";
+    if (domain)
+      cookie += "domain=" + domain + ";";
+
+    document.cookie = cookie;
+  }
+
+  function getCookie(name) {
+    var regexp = new RegExp("(?:^" + name + "|;\s*"+ name + ")=(.*?)(?:;|$)", "g");
+    var result = regexp.exec(document.cookie);
+    return (result === null) ? null : result[1];
+  }
+
+  function deleteCookie(name, path, domain) {
+    // If the cookie exists
+    if (getCookie(name))
+      createCookie(name, "", -1, path, domain);
+  }
+
+function displayPopup (){
 
    // This sticky bar is created using only javascript and it's prepared to avoid any browser problem. It was tested on Google Tag Manager and works fine, hope you enjoy.
 
@@ -40,6 +77,8 @@ jQuery(document).ready(function( $ ) {
     }
 
     // It creates a ajax request for our accept button to whatever you want to
+
+
         function accept()
         {
             var APID = '{{APID}}'
@@ -93,6 +132,7 @@ jQuery(document).ready(function( $ ) {
         // Accept button
         var button = document.createElement("button")
 
+
         button.setAttribute(
             'style', 'text-align: center; margin:10px; background-color: #9e2b3f; color: #fff; border: none; padding: 8px; min-width: 25%; border-radius: 5px; font-size: 11pt; float: right; cursor: pointer; display: inline-block; font-weight: normal'
         )
@@ -108,17 +148,45 @@ jQuery(document).ready(function( $ ) {
 
         document.body.appendChild(background);
 
+    // Cookies
+
+
+
     // Action buttons events:
         document.querySelector(".button-accept").addEventListener('click', function () {
             //accept()
+
+            //setCookiePopup()
             slideUp(document.querySelector(".popup"), 200);
         });
 
+    //checkCookie()
 
     document.body.appendChild(background)
 
+}
 
+// sets the cookie cookie1
+function setCookiePopup() {
+  createCookie("popup", "padre", 30);
+}
 
+function checkCookie() {
+  var cookie = getCookie("popup");
+  if (cookie == "padre") {
+   //alert("Welcome again " + username);
 
-})()
+   //deleteCookie("popup")
+   //console.log(getCookie("popup"));
+  } else {
+
+    //console.log('no-cookie');
+    displayPopup ()
+    setCookiePopup()
+
+  }
+}
+
+checkCookie()
+
 })
