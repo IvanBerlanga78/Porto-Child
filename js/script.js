@@ -1,5 +1,6 @@
-
 jQuery(document).ready(function( $ ) {
+
+
 
     /*
    * Comportamiento de apertura y cierre del modal buscador
@@ -35,7 +36,7 @@ jQuery(document).ready(function( $ ) {
             $('.recoger_local').hide();
         }
 
-});
+      });
 
  /*
  * Cierra por defecto los acordeones de los filtros de categoria
@@ -74,4 +75,39 @@ jQuery.extend(theme.WooWidgetToggle.prototype, {
     });
 
 
+
+
 }); //end document-ready//
+
+
+jQuery(document).ready(function( $ ) {
+  function hideShowComments () {
+    // Get the #comments div
+    var commentsDiv = $('.woocommerce-Reviews');
+    // Hide the comments div by default
+    $('#reviews.woocommerce-Reviews').hide();
+    console.log("hola");
+    // Append a link to show/hide
+    $('<button/>')
+      .attr('class', 'toggle-comments')
+      .attr('href', '#')
+      .html('Show Comments <span class="icon_comment"></span>')
+      .insertBefore(commentsDiv);
+
+    // when show/hide is clicked
+    $('.toggle-comments').on('click', function(e) {
+      e.preventDefault();
+
+      // show/hide the div using jquery's toggle()
+      $(commentsDiv).toggle('slow', function() {
+        // change the text of the anchor
+        var anchor = $('.toggle-comments');
+        var anchorText = anchor.html() == 'Show Comments <span class="icon_comment"></span>' ? 'Hide Comments <span class="icon_comment"></span>' : 'Show Comments <span class="icon_comment"></span>';
+        $(anchor).html(anchorText);
+      });
+    });
+
+
+  }
+  //hideShowComments ();
+})

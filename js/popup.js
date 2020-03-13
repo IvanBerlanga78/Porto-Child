@@ -36,6 +36,17 @@ jQuery(document).ready(function( $ ) {
       createCookie(name, "", -1, path, domain);
   }
 
+  function checkCookie() {
+    var cookie = getCookie("padre");
+
+    if (document.cookie.indexOf('padre')== -1) {
+      displayPopup ()
+    } else {
+      //deleteCookie()
+      //console.log('cookie');
+    }
+  }
+
 function displayPopup (){
 
    // This sticky bar is created using only javascript and it's prepared to avoid any browser problem. It was tested on Google Tag Manager and works fine, hope you enjoy.
@@ -143,7 +154,6 @@ function displayPopup (){
 
         background.appendChild(button)
 
-
         var button = document.createElement("button")
 
         document.body.appendChild(background);
@@ -156,7 +166,7 @@ function displayPopup (){
         document.querySelector(".button-accept").addEventListener('click', function () {
             //accept()
 
-            //setCookiePopup()
+            setCookiePopup()
             slideUp(document.querySelector(".popup"), 200);
         });
 
@@ -169,22 +179,6 @@ function displayPopup (){
 // sets the cookie cookie1
 function setCookiePopup() {
   createCookie("popup", "padre", 30);
-}
-
-function checkCookie() {
-  var cookie = getCookie("popup");
-  if (cookie == "padre") {
-   //alert("Welcome again " + username);
-
-   //deleteCookie("popup")
-   //console.log(getCookie("popup"));
-  } else {
-
-    //console.log('no-cookie');
-    displayPopup ()
-    setCookiePopup()
-
-  }
 }
 
 checkCookie()

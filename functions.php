@@ -73,6 +73,31 @@ comments_template();
 
 
 /**
+ * @snippet       WooCommerce Move JetPack Social Sharing
+ * @how-to        Get CustomizeWoo.com FREE
+ * @sourcecode    https://businessbloomer.com/?p=321
+ * @author        Rodolfo Melogli
+ * @compatible    WooCommerce 3.5.4
+ * @donate $9     https://businessbloomer.com/bloomer-armada/
+ */
+
+// Remove them from under short description
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50 );
+
+// Readd above product tabs
+add_action( 'woocommerce_product_meta_end' , 'woocommerce_template_single_sharing', 5 );
+
+// Show whishlist button on product page
+add_action( 'woocommerce_product_meta_end' , 'showWhishlitButton', 10 );
+
+function showWhishlitButton () {
+	echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
+}
+
+
+
+
+/**
  * Hides the product's weight and dimension in the single product page.
  */
 add_filter( 'wc_product_enable_dimensions_display', '__return_false' );
