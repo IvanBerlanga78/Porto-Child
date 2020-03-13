@@ -1,5 +1,4 @@
 <?php
-
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 add_action( 'wp_enqueue_scripts', 'porto_child_css', 1001 );

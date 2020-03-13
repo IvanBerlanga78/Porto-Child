@@ -1,5 +1,17 @@
 jQuery(document).ready(function( $ ) {
 
+  function createCookieMin(name,value,minutes) {
+    if (minutes) {
+        var date = new Date();
+        date.setTime(date.getTime()+(minutes*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    } else {
+        var expires = "";
+    }
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+
   function createCookie(name, value, expires, path, domain) {
     var cookie = name + "=" + escape(value) + ";";
 
@@ -169,16 +181,14 @@ function displayPopup (){
             setCookiePopup()
             slideUp(document.querySelector(".popup"), 200);
         });
-
     //checkCookie()
-
     document.body.appendChild(background)
 
 }
 
 // sets the cookie cookie1
 function setCookiePopup() {
-  createCookie("popup", "padre", 30);
+  createCookieMin("popup", "padre", 5);
 }
 
 checkCookie()

@@ -445,7 +445,7 @@ ul.products li.product-col h3 { color: #000; font-weight: 500; }
  }
 
  #footer #mailpoet_form_1 p,  #footer #mailpoet_form_1 input {
-     width: 100%;
+     width: 100%!;
  }
  #footer #custom_html-3 p {
     text-transform: none!important;
