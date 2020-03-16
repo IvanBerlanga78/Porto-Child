@@ -42,7 +42,7 @@ function awesomplete_script() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'popup_script', 12 );
+//add_action( 'wp_enqueue_scripts', 'popup_script', 12 );
 function popup_script() {
 	wp_enqueue_script( 'popup_script', esc_url( get_stylesheet_directory_uri() ) . '/js/popup.js' );
 }
