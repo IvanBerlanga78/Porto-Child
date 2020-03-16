@@ -671,7 +671,7 @@ function override_default_address_checkout_fields( $address_fields ) {
 }
 
 
-add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
+//add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
 
 function modify_shipping_rate( $available_shipping_methods, $package){
 
