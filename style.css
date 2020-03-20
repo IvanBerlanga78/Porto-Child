@@ -1444,6 +1444,10 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
   display:none
 }
 
+.woocommerce-cart #shipping_method {
+    margin-bottom: 30px;
+}
+
 @media (max-width: 900px) {
     .awesomplete ul{
         list-style-type: none;
