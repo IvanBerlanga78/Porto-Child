@@ -1440,7 +1440,9 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
     border-top: 3px solid #c7c7c7!important;
     border-left: 3px solid #c7c7c7!important;
 }
-
+.outofstock :not(.share-links) .yith-wcwl-add-to-wishlist {
+  display:none
+}
 
 @media (max-width: 900px) {
     .awesomplete ul{

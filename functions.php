@@ -671,7 +671,7 @@ function override_default_address_checkout_fields( $address_fields ) {
 }
 
 
-//add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
+add_filter( 'woocommerce_package_rates',  'modify_shipping_rate', 15, 2 );
 
 function modify_shipping_rate( $available_shipping_methods, $package){
 
@@ -685,7 +685,7 @@ function modify_shipping_rate( $available_shipping_methods, $package){
 		switch ($zone) {
 			case 'Barcelona Ciudad':
 
-				if( $total_cost >= 100 ){
+				if( $total_cost >= 30 ){
 
   			unset( $available_shipping_methods['apg_shipping:7'] );
 	  		}
@@ -696,8 +696,10 @@ function modify_shipping_rate( $available_shipping_methods, $package){
 				break;
 
 				case 'Península':
-				$max_weight = 65;
-				//$rates = disable_shipping_methods ();
+				if( $total_cost >= 30 ){
+
+  			unset( $available_shipping_methods['apg_shipping:17'] );
+	  		};
 				break;
 		}
     return $available_shipping_methods;
