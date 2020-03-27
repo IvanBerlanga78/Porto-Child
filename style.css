@@ -1452,6 +1452,16 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
     margin-bottom: 30px;
 }
 
+#mega-menu-item-190010 > a.mega-menu-link {
+    display:none!important;
+}
+
+.mega-menu-item-2465 .widget_media_image {
+    border-bottom: 1px solid!important;
+    text-align: center!important;
+    padding-top: 8px!important;
+}
+
 @media (max-width: 900px) {
     .awesomplete ul{
         list-style-type: none;
