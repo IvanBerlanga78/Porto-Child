@@ -1021,9 +1021,7 @@ background-size: contain;
 background-repeat: no-repeat;
 background-position-y: 6px;
 }
-#mega-menu-wrap-main_menu #mega-menu-main_menu li#mega-menu-item-2465 > .mega-menu-link, #mega-menu-wrap-main_menu #mega-menu-main_menu li#mega-menu-item-2465 > .mega-menu-link:hover  {
-color: transparent;
-}
+
 
 
 .woocommerce-checkout .box-content {
@@ -1648,6 +1646,8 @@ ul.products li.product-col .add-links .yith-wcwl-add-to-wishlist>div {
 .single-product .woocommerce-product-rating:after {
     border-top:0;
 }
+
+.mm-panel ul li:nth-child(5) {display: none}
 
 @media only screen and (min-width: 601px) {
   #mega-menu-wrap-main_menu #mega-menu-main_menu li.mega-menu-megamenu > ul.mega-sub-menu {
