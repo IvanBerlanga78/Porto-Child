@@ -1,6 +1,9 @@
 <?php
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+
+
+
 add_action( 'wp_enqueue_scripts', 'porto_child_css', 1001 );
 
 // Load CSS
@@ -622,7 +625,7 @@ function reset_previous_chosen_shipping_method_2() {
 
 function myprefix_custom_cron_schedule( $schedules ) {
     $schedules['every_six_hours'] = array(
-        'interval' => 86400, // Every 24 hours
+        'interval' => 3600, // Every 24 hours
         'display'  => __( 'Every 6 hours' ),
     );
     return $schedules;
@@ -638,31 +641,42 @@ if ( ! wp_next_scheduled( 'myprefix_cron_hook' ) ) {
  add_action( 'myprefix_cron_hook', 'write_json' );
 
 //create your function, that runs on cron
+ add_action( 'myprefix_cron_hook', 'write_json' );
+
+//create your function, that runs on cron
 function write_json() {
-          global $wpdb;
+  global $wpdb;
 
-            $sql = "select post_title
-            from $wpdb->posts
-            where post_type = 'product'
-            and post_status='publish'";
+  $sql = "select post_title
+  from laf_posts
+  where post_type = 'product' or post_type ='category'
+  and post_status='publish'";
 
-        $sql = $wpdb->prepare($sql);  // Replaces the %s in $sql with $input
-        $results = $wpdb->get_results($sql, OBJECT);  // Get the rows from the database
+  $sql = $wpdb->prepare($sql);  // Replaces the %s in $sql with $input
+  $results = $wpdb->get_results($sql, OBJECT);  // Get the rows from the database
 
-        // Build an array of matching post titles
-        $post_titles = array();
-        foreach ($results as $r) {
-            //$post_titles[] = addslashes($r->post_title);
-						$post_titles[] = $r->post_title;
-        }
+  // Build an array of matching post titles
+  $post_titles = array();
+  foreach ($results as $r) { $post_titles[] = $r->post_title; }
+            
+  $sql = "SELECT t.name
+  FROM laf_term_taxonomy tt, laf_terms t
+  WHERE tt.taxonomy = 'product_cat' AND tt.term_id = t.term_id";
 
-        $fp = fopen('aw_database_data.json', 'w');
-        if ( !$fp ) {
-          echo 'fopen failed. reason: ', $php_errormsg;
-        }
-        fwrite($fp, json_encode($post_titles, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK));
-        fclose($fp);
+  $sql = $wpdb->prepare($sql);  // Replaces the %s in $sql with $input  
+  $results = $wpdb->get_results($sql, OBJECT);  // Get the rows from the database
+
+  // Build an array of matching post titles
+  $post_categ = array();
+  foreach ($results as $r) { $post_categ[] = $r->name; }
+  $resultado = array_merge($post_categ, $post_titles);
+
+  $fp = fopen('aw_database_data.json', 'w');
+  if ( !$fp ) { echo 'fopen failed. reason: ', $php_errormsg; }
+  fwrite($fp, json_encode($resultado, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK));
+  fclose($fp);
 }
+
 
 add_filter('woocommerce_default_address_fields', 'override_default_address_checkout_fields', 20, 1);
 function override_default_address_checkout_fields( $address_fields ) {
