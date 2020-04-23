@@ -1,4 +1,6 @@
 jQuery(document).ready(function( $ ) {
+
+
     /*
    * Comportamiento de apertura y cierre del modal buscador
    *
@@ -22,6 +24,9 @@ jQuery(document).ready(function( $ ) {
         $('#accordion').accordion('option', 'active', ($('#accordion').accordion('option', 'active') + delta));
     });
 
+
+
+
   }//end if//
 
     jQuery( document.body ).on( 'updated_checkout', function(){
@@ -32,6 +37,8 @@ jQuery(document).ready(function( $ ) {
         }else {
             $('.recoger_local').hide();
         }
+
+
 
       });
 

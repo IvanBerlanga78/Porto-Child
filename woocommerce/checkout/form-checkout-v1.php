@@ -46,7 +46,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 				<div class="align-left">
 					<div class="box-content">
 						<div class="accordion" id="accordion">
-							<h4><a href="#"><span class="number">1</span>Datos de Facturación</a></h4>
+							<h4><a href="#"><span class="number">1</span>Tus datos</a></h4>
 							    <div class="panel">
 							        <?php /* facturación*/
 							      	do_action( 'woocommerce_checkout_billing' ); ?>
@@ -64,6 +64,18 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 
 							        <a class="btn next">Usar este método de envío</a>
 							    </div>
+									<h4><a href="#"><span class="number">3</span>Opciones</a></h4>
+									    <div class="panel">
+												<p class="woocommerce-message"><img style="float: left; margin-right:10px;" width="50" src="http://lafuente.es/wp-content/uploads/2020/04/simbolo-reciclaje-01-2.png">
+													Acorde con nuestra política de sostenibilidad y del cuidado del medio ambiente empleamos cajas de cartón reutilizables.
+												</p>
+												<?php
+												/* Pago */
+													do_action( 'woocommerce_checkout_shipping' ); ?>
+													<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
+
+									        <a class="btn next">Siguiente</a>
+									    </div>
 							<!--<h4><a href="#"><span class="number">3</span>Seleccionar Método de Pago</a></h4>
 							    <div class="panel">
 
@@ -73,13 +85,12 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    </div>-->
 							 <h4><a href="#"><span class="number">3</span>Finalizar Compra</a></h4>
 							    <div class="panel">
-											<?php
-											/* Pago */
-											do_action( 'woocommerce_checkout_after_customer_details' ); ?>
-							        <?php
-							      	/* Pago */
-							      		do_action( 'woocommerce_checkout_shipping' ); ?>
-											<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
+										<?php
+										/* Pago */
+										do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+
+
+										<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
 
 							    </div>

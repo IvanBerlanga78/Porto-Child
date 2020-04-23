@@ -56,6 +56,13 @@ if ($url== 'http://lafuente.es/cat-prod/vinos/') {
 		</a>
 <?php
 }
+elseif (strpos($url,'vinos') !== false && strpos($url,'?filter_pais') !== false) {
+?>
+	<a href="http://www.lafuente.es">
+		<img src="http://lafuente.es/wp-content/uploads/2019/12/categorias_vinos.jpg" class="category-image" alt="VINOS">
+	</a>
+<?php
+}
 elseif ($url== 'http://lafuente.es/cat-prod/vinos/tinto/') {
 ?>
 	<a href="http://www.lafuente.es">
@@ -105,7 +112,7 @@ elseif ($url== 'http://lafuente.es/cat-prod/vinos/tinto/') {
 <?php
 }elseif ($url== 'http://lafuente.es/cat-prod/espumosos/cava/') {
 ?>
-		<a href="http://www.lafuente.es">
+		<a href="https://lafuente.es/?s=ars+collecta&post_type=product">
 			<img src="https://lafuente.es/wp-content/uploads/2020/04/COD_banners_Lafuente_900x200_104.jpg" class="category-image" alt="ARS COLLECTA">
 		</a>
 <?php
@@ -127,9 +134,38 @@ elseif ($url== 'http://lafuente.es/cat-prod/vinos/tinto/') {
 			<img src="http://lafuente.es/wp-content/uploads/2019/12/categorias_sangria.jpg" class="category-image" alt="SANGRIA">
 		</a>
 <?php
-
-
+}elseif ($url== 'http://lafuente.es/vinificacion/blanco/') {
+?>
+		<a href="http://www.lafuente.es">
+			<img src="http://lafuente.es/wp-content/uploads/2020/04/categorias_vinificacion_blanco.jpg" class="category-image" alt="VINIFICACION-BLANCO">
+		</a>
+<?php
+}elseif ($url== 'http://lafuente.es/vinificacion/rosado/') {
+?>
+		<a href="http://www.lafuente.es">
+			<img src="http://lafuente.es/wp-content/uploads/2020/04/categorias_vinificacion_rosado.jpg" class="category-image" alt="VINIFICACION-ROSADO">
+		</a>
+<?php
+}elseif ($url== 'http://lafuente.es/vinificacion/blanc-de-blancs/') {
+?>
+		<a href="http://www.lafuente.es">
+			<img src="http://lafuente.es/wp-content/uploads/2020/04/categorias_vinificacion_blanc_de_blancs.jpg" class="category-image" alt="VINIFICACION-BLANC-DE-BLANCS">
+		</a>
+<?php
+}elseif ($url== 'http://lafuente.es/vinificacion/blanc-de-noirs/') {
+?>
+		<a href="http://www.lafuente.es">
+			<img src="http://lafuente.es/wp-content/uploads/2020/04/categorias_vinificacion_blanc_de_noirs.jpg" class="category-image" alt="VINIFICACION-BLANC-DE-NOIRS">
+		</a>
+<?php
 /**********DESTILADOS***********/
+}elseif ($url== 'http://lafuente.es/cat-prod/destilados/') {
+?>
+		<a href="http://www.lafuente.es">
+			<img src="http://lafuente.es/wp-content/uploads/2019/12/categorias_destilados.jpg" class="category-image" alt="ABSENTA">
+		</a>
+<?php
+
 }elseif ($url== 'http://lafuente.es/cat-prod/destilados/absenta/') {
 ?>
 		<a href="http://www.lafuente.es">
@@ -279,7 +315,7 @@ elseif ($url== 'http://lafuente.es/cat-prod/vinos/tinto/') {
 }elseif ($url== 'http://lafuente.es/cat-prod/destilados/whisky/') {
 ?>
 	<a href="http://www.lafuente.es">
-		<img src="https://lafuente.es/wp-content/uploads/2020/03/auchentoshan-900x200-gama-completab.jpg" class="category-image" alt="WHISKY">
+		<img src="https://lafuente.es/wp-content/uploads/2020/03/auchentoshan-900x200-gama-completab.jpg" class="category-image" alt="AUCHENTOSAN">
 	</a>
 <?php
 }elseif ($url== 'http://lafuente.es/tipo/blended-reserve/') {
@@ -300,6 +336,7 @@ elseif ($url== 'http://lafuente.es/cat-prod/vinos/tinto/') {
 		<img src="http://lafuente.es/wp-content/uploads/2019/12/categorias_whisky.jpg" class="category-image" alt="SINGLE MALT">
 	</a>
 <?php
+
 } else {
 	    echo 'No banner.';
 	}

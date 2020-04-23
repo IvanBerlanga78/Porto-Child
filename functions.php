@@ -2,6 +2,42 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 
+function claserama_change_field_class($fields){
+
+			$fields['billing']['nif']['class'][0] = 'form-row-first';
+			$fields['billing']['billing_phone']['class'][0] = 'form-row-last';
+			$fields['billing']['billing_postcode']['class'][0] = 'form-row-first';
+		  $fields['billing']['billing_city']['class'][0] = 'form-row-last';
+			$fields['billing']['billing_country']['class'][0] = 'form-row-last';
+			$fields['billing']['billing_state']['class'][0] = 'form-row-first';
+
+			$fields['billing']['billing_first_name']['priority'] = 10;
+			$fields['billing']['billing_last_name']['priority'] = 20;
+			$fields['billing']['billing_company']['priority'] = 30;
+			$fields['billing']['nif']['priority'] = 40;
+			$fields['billing']['billing_phone']['priority'] = 48;
+			$fields['billing']['billing_email']['priority'] = 49;
+			$fields['billing']['billing_address_1']['priority'] = 70;
+			$fields['billing']['billing_address_2']['priority'] = 80;
+			$fields['billing']['billing_postcode']['priority'] = 100;
+			$fields['billing']['billing_country']['priority'] = 110;
+			$fields['billing']['billing_state']['priority'] = 120;
+
+			$fields['shipping']['shipping_postcode']['class'][0] = 'form-row-first';
+			$fields['shipping']['shipping_city']['class'][0] = 'form-row-last';
+			$fields['shipping']['shipping_country']['class'][0] = 'form-row-first';
+			$fields['shipping']['shipping_state']['class'][0] = 'form-row-last';
+
+			$fields['shipping']['shipping_first_name']['priority'] = 10;
+			$fields['shipping']['shipping_last_name']['priority'] = 20;
+			$fields['shipping']['shipping_company']['priority'] = 30;
+			$fields['shipping']['shipping_country']['priority'] = 110;
+
+     return $fields;
+}
+add_filter('woocommerce_checkout_fields','claserama_change_field_class');
+
+
 
 
 add_action( 'wp_enqueue_scripts', 'porto_child_css', 1001 );
@@ -304,6 +340,8 @@ function my_custom_checkout_field_display_admin_order_meta($order){
 }
 
 
+
+
 /**
  * Add the field to the checkout - Nota regalo
  */
@@ -361,7 +399,7 @@ function agrega_mi_campo_personalizado( $fields) {
 
 	$fields['billing']['nif'] = array(
 		'type'          => 'text',
-		'class'         => array('form-row-wide'),
+		'class'         => array('form-row-first'),
 		'label'         => __('NIF-DNI'),
 		'required'      => false,
 		'priority' => '40',
@@ -382,6 +420,7 @@ function actualizar_info_pedido_con_nuevo_campo( $order_id ) {
     if ( ! empty( $_POST['nota-regalo'] ) ) {
         update_post_meta( $order_id, 'NOTA REGALO', sanitize_text_field( $_POST['nota-regalo'] ) );
     };
+
     if ( ! empty( $_POST['recoger-local'] ) ) {
         update_post_meta( $order_id, 'RECOGER EN LOCAL', sanitize_text_field( $_POST['recoger-local'] ) );
     };
@@ -430,7 +469,7 @@ function incluir_campos_en_factura( $address ){
 
 <?php
 
-add_action( 'woocommerce_before_checkout_form', 'print_donation_notice', 10 );
+add_action( 'woocommerce_after_order_notes', 'print_donation_notice', 1 );
 function print_donation_notice() {
     wc_print_notice( sprintf(
         __("¿Quieres añadir una caja o estuche a tu compra? Cómpralo <a href='https://lafuente.es/cat-prod/embalaje/'>aquí</a>", "porto"),
@@ -443,13 +482,13 @@ function print_donation_notice() {
 // Quitar el order review (Finalizar Compra) para ponerlo en la función 'websites_depot_order_fragments_split_shipping'
 
 remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
-add_action( 'woocommerce_after_order_notes', 'woocommerce_checkout_payment', 20 );
+add_action( 'woocommerce_checkout_after_customer_details', 'woocommerce_checkout_payment', 20 );
 
 
 /**
  * Moving the payments
  */
-add_action( 'woocommerce_checkout_after_customer_details', 'my_custom_display_payments', 20 );
+add_action( 'woocommerce_checkout_after_customer_details', 'my_custom_display_payments', 10 );
 
 /**
  * Displaying the Payment Gateways
@@ -658,12 +697,12 @@ function write_json() {
   // Build an array of matching post titles
   $post_titles = array();
   foreach ($results as $r) { $post_titles[] = $r->post_title; }
-            
+
   $sql = "SELECT t.name
   FROM laf_term_taxonomy tt, laf_terms t
   WHERE tt.taxonomy = 'product_cat' AND tt.term_id = t.term_id";
 
-  $sql = $wpdb->prepare($sql);  // Replaces the %s in $sql with $input  
+  $sql = $wpdb->prepare($sql);  // Replaces the %s in $sql with $input
   $results = $wpdb->get_results($sql, OBJECT);  // Get the rows from the database
 
   // Build an array of matching post titles
@@ -736,3 +775,14 @@ function my_custom_available_payment_gateways( $gateways ) {
 
 }
 add_filter( 'woocommerce_available_payment_gateways', 'my_custom_available_payment_gateways' );
+
+//add_filter( 'woocommerce_checkout_fields' , 'misha_print_all_fields' );
+
+function misha_print_all_fields( $fields ) {
+
+	$f['billing']['billing_email']['class'][0] = 'form-row-wide';
+	$f['billing']['billing_phone']['class'][0] = 'form-row-wide';
+
+	return $f;
+
+}
