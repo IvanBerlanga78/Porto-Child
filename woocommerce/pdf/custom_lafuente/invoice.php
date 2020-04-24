@@ -45,9 +45,9 @@
 			<?php do_action( 'wpo_wcpdf_before_shipping_address', $this->type, $this->order ); ?>
 			<?php $this->shipping_address(); ?>
 			<?php do_action( 'wpo_wcpdf_after_shipping_address', $this->type, $this->order ); ?>
-			<?php } ?>
+
 			<?php if( !empty( $this->custom_field('shipping_phone', '<strong>Teléfono:</strong>') ) ) : ?><?php $this->custom_field('shipping_phone', '<strong>Teléfono:</strong>'); ?><?php endif; ?>
-			<?php echo '<br>' ?>
+			<?php } ?>
 		</td>
 		<td class="order-data">
 			<table>
@@ -102,7 +102,6 @@
 				<span class="item-meta"><?php echo $item['meta']; ?></span>
 				<dl class="meta">
 					<?php $description_label = __( 'SKU', 'woocommerce-pdf-invoices-packing-slips' ); // registering alternate label translation ?>
-					<?php if( !empty( $item['weight'] ) ) : ?><dt class="weight"><?php _e( 'Weight:', 'woocommerce-pdf-invoices-packing-slips' ); ?></dt><dd class="weight"><?php echo $item['weight']; ?><?php echo get_option('woocommerce_weight_unit'); ?></dd><?php endif; ?>
 
 
 
