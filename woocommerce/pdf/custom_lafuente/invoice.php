@@ -46,6 +46,8 @@
 			<?php $this->shipping_address(); ?>
 			<?php do_action( 'wpo_wcpdf_after_shipping_address', $this->type, $this->order ); ?>
 			<?php } ?>
+			<?php if( !empty( $this->custom_field('shipping_phone', '<strong>Teléfono:</strong>') ) ) : ?><?php $this->custom_field('shipping_phone', '<strong>Teléfono:</strong>'); ?><?php endif; ?>
+			<?php echo '<br>' ?>
 		</td>
 		<td class="order-data">
 			<table>

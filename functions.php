@@ -23,16 +23,23 @@ function claserama_change_field_class($fields){
 			$fields['billing']['billing_country']['priority'] = 110;
 			$fields['billing']['billing_state']['priority'] = 120;
 
-			$fields['shipping']['shipping_postcode']['class'][0] = 'form-row-first';
+			$fields['shipping']['shipping_postcode']['class'][0] = 'form-row-last';
 			$fields['shipping']['shipping_city']['class'][0] = 'form-row-last';
 			$fields['shipping']['shipping_country']['class'][0] = 'form-row-first';
 			$fields['shipping']['shipping_state']['class'][0] = 'form-row-last';
+			$fields['shipping']['shipping_address_2']['class'][0] = 'form-row-first';
+			$fields['shipping']['shipping_postcode']['class'][0] = 'form-row-first';
+			$fields['shipping']['shipping_phone']['class'][0] = 'form-row-last';
 
 			$fields['shipping']['shipping_first_name']['priority'] = 10;
 			$fields['shipping']['shipping_last_name']['priority'] = 20;
+			$fields['shipping']['shipping_address_1']['priority'] = 25;
 			$fields['shipping']['shipping_company']['priority'] = 30;
+			$fields['shipping']['shipping_phone']['priority'] = 11;
+			$fields['shipping']['shipping_postcode']['priority'] = 80;
 			$fields['shipping']['shipping_country']['priority'] = 110;
 
+			$fields['shipping']['shipping_address_2']['label'] = 'Piso, número...';
      return $fields;
 }
 add_filter('woocommerce_checkout_fields','claserama_change_field_class');
@@ -132,7 +139,16 @@ function showWhishlitButton () {
 	echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
 }
 
+/**
+ * Mensaje en ficha de producto
+ */
 
+add_action( 'woocommerce_before_add_to_cart_form', 'bbloomer_show_return_policy', 20 );
+function bbloomer_show_return_policy() {
+    echo '<span class="rtrn" style="font-size:12px">Entrega 24h-48h en Barcelona Ciudad.</span><br>';
+		echo '<span class="rtrn" style="font-size:12px">Entrega 48h-72h en el resto de España.</span><br>';
+		echo '<span class="rtrn" style="font-size:12px">Debido a la situación actual pueden producirse demoras puntuales.</span>';
+}
 
 
 /**
@@ -408,6 +424,24 @@ function agrega_mi_campo_personalizado( $fields) {
 	return $fields;
 }
 
+add_filter( 'woocommerce_checkout_fields', 'bbloomer_shipping_phone_checkout' );
+
+function bbloomer_shipping_phone_checkout( $fields ) {
+   $fields['shipping']['shipping_phone'] = array(
+      'label' => 'Teléfono',
+      'required' => false,
+			'class' => array( 'form-row-last' ),
+			'priority' => 65,
+   );
+   return $fields;
+}
+
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'bbloomer_shipping_phone_checkout_display' );
+
+function bbloomer_shipping_phone_checkout_display( $order ){
+    echo '<p><b>Teléfono envío:</b> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+}
+
 /**
  * Actualiza la información del pedido con el nuevo campo
  */
@@ -420,7 +454,9 @@ function actualizar_info_pedido_con_nuevo_campo( $order_id ) {
     if ( ! empty( $_POST['nota-regalo'] ) ) {
         update_post_meta( $order_id, 'NOTA REGALO', sanitize_text_field( $_POST['nota-regalo'] ) );
     };
-
+		if ( ! empty( $_POST['shipping_phone'] ) ) {
+				update_post_meta( $order_id, 'TELEFONO ENVÍO', sanitize_text_field( $_POST['shipping_phone'] ) );
+		};
     if ( ! empty( $_POST['recoger-local'] ) ) {
         update_post_meta( $order_id, 'RECOGER EN LOCAL', sanitize_text_field( $_POST['recoger-local'] ) );
     };
@@ -435,6 +471,7 @@ add_action( 'woocommerce_admin_order_data_after_billing_address', 'mostrar_campo
 function mostrar_campo_personalizado_en_admin_pedido($order){
     echo '<p><strong>'.__('NIF').':</strong> ' . get_post_meta( $order->id, 'NIF', true ) . '</p>';
     echo '<p><strong>'.__('NOTA REGALO').':</strong> ' . get_post_meta( $order->id, 'NOTA REGALO', true ) . '</p>';
+		echo '<p><strong>'.__('TELEFONO ENVÍO').':</strong> ' . get_post_meta( $order->id, 'TELEFONO ENVÍO', true ) . '</p>';
     echo '<p><strong>'.__('RECOGER EN LOCAL').':</strong> ' . get_post_meta( $order->id, 'RECOGER EN LOCAL', true ) . '</p>';
 }
 
@@ -461,10 +498,22 @@ function incluir_campos_en_factura( $address ){
 
   echo $address . '<p>';
   $wpo_wcpdf->custom_field( 'NIF', 'NIF: ' );
+
   echo '</p>';
 
 }
 
+add_filter( 'wpo_wcpdf_shipping_address', 'incluir_campos_en_factura' );
+
+function incluir_telefono_en_factura( $address ){
+  global $wpo_wcpdf;
+
+  echo $address . '<p>';
+  $wpo_wcpdf->custom_field( 'NIF', 'NIF: ' );
+
+  echo '</p>';
+
+}
 ?>
 
 <?php

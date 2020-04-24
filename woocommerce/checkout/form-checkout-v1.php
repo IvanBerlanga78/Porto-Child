@@ -66,7 +66,7 @@ $get_checkout_url = version_compare( $porto_woo_version, '2.5', '<' ) ? apply_fi
 							    </div>
 									<h4><a href="#"><span class="number">3</span>Opciones</a></h4>
 									    <div class="panel">
-												<p class="woocommerce-message"><img style="float: left; margin-right:10px;" width="50" src="http://lafuente.es/wp-content/uploads/2020/04/simbolo-reciclaje-01-2.png">
+												<p class="woocommerce-message"><img style="float: left; margin-right:10px;" width="50" src="https://lafuente.es/wp-content/uploads/2020/04/simbolo-reciclaje.png">
 													Acorde con nuestra política de sostenibilidad y del cuidado del medio ambiente empleamos cajas de cartón reutilizables.
 												</p>
 												<?php
